@@ -7,6 +7,19 @@
                     @method("POST")
                     
                     <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
+                        <!-- USERNAME -->
+                        <div>
+                            <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                            <div class="mt-1">
+                                <input type="text" id="username" name="username" value="{{ old('username') }}" 
+                                    class="shadow-sm p-2 focus:ring-sky-500 focus:border-sky-500 block w-full sm:text-sm border-gray-300 rounded-md" 
+                                    placeholder="862481">
+                                @error('username')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
                         <!-- Nama -->
                         <div>
                             <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
@@ -20,18 +33,6 @@
                             </div>
                         </div>
 
-                        <!-- NIP -->
-                        <div>
-                            <label for="nip" class="block text-sm font-medium text-gray-700">NIP</label>
-                            <div class="mt-1">
-                                <input type="text" id="nip" name="nip" value="{{ old('nip') }}" 
-                                    class="shadow-sm p-2 focus:ring-sky-500 focus:border-sky-500 block w-full sm:text-sm border-gray-300 rounded-md" 
-                                    placeholder="862481">
-                                @error('nip')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
 
                         <!-- Alamat -->
                         <div class="sm:col-span-2">

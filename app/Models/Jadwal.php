@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Absensi extends Model
+class Jadwal extends Model
 {
     use HasFactory;
 
-    protected $table = 'absensi';
-    protected $fillable = ['id_siswa', 'id_mapel', 'tanggal', 'status'];
+    protected $table = 'jadwal';
+    protected $fillable = ['id_kelas','id_mapel', 'hari', 'jam_mulai', 'jam_selesai', 'ruangan'];
 
-    public function siswa()
+    public function kelas()
     {
-        return $this->belongsTo(Siswa::class, 'id_siswa');
+        return $this->belongsTo(Kelas::class, 'id_kelas');
     }
     public function mata_pelajaran()
     {

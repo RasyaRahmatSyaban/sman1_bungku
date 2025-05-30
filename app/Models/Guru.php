@@ -11,15 +11,15 @@ class Guru extends Model
     use HasFactory;
 
     protected $table = 'guru';
-    protected $fillable = ['nama', 'nip', 'alamat'];
+    protected $fillable = ['id_user', 'nama', 'nip', 'alamat'];
 
     public function mataPelajaran()
     {
-        return $this->hasMany(MataPelajaran::class, 'guru_id');
+        return $this->hasMany(MataPelajaran::class, 'id_guru');
     }
     
     public function kelas()
     {
-        return $this->hasOne(Kelas::class, 'wali_kelas_id');
+        return $this->hasOne(Kelas::class, 'id_wali_kelas');
     }
 }

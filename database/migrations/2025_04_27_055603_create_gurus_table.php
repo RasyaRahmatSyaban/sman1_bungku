@@ -10,6 +10,8 @@ class CreateGurusTable extends Migration
     {
         Schema::create('guru', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_user')->constrained('users', 'id')
+            ->onUpdate('cascade')->onDelete('restrict');
             $table->string('nama');
             $table->string('nip')->unique();
             $table->text('alamat');

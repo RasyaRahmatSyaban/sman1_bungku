@@ -10,20 +10,20 @@ class MataPelajaran extends Model
     use HasFactory;
 
     protected $table = 'mata_pelajaran';
-    protected $fillable = ['nama_mapel', 'hari', 'guru_id', 'kelas_id'];
+    protected $fillable = ['nama_mapel', 'id_guru'];
 
     public function guru()
     {
-        return $this->belongsTo(Guru::class, 'guru_id');
+        return $this->belongsTo(Guru::class, 'id_guru');
     }
 
-    public function kelas()
+    public function jadwal()
     {
-        return $this->belongsTo(Kelas::class, 'kelas_id');
+        return $this->hasMany(Jadwal::class, 'id_mapel');
     }
 
     public function nilai()
     {
-        return $this->hasMany(Nilai::class, 'mapel_id');
+        return $this->hasMany(Nilai::class, 'id_mapel');
     }
 }

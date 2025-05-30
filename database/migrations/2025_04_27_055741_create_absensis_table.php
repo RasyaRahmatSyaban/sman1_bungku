@@ -10,8 +10,10 @@ class CreateAbsensisTable extends Migration
     {
         Schema::create('absensi', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_siswa')->constrained('siswa', 'id', 'id_siswa'
-            )->onUpdate('cascade')->onDelete('restrict');
+            $table->foreignId('id_siswa')->constrained('siswa', 'id')
+            ->onUpdate('cascade')->onDelete('restrict');
+            $table->foreignId('id_mapel')->constrained('mata_pelajaran', 'id')
+            ->onUpdate('cascade')->onDelete('restrict');
             $table->date('tanggal');
             $table->enum('status', ['Hadir', 'Izin', 'Sakit', 'Alpa']);
             $table->timestamps();

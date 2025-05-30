@@ -29,32 +29,42 @@
                         <a href="{{ route('kelas.index') }}" 
                            class="{{ request()->is('kelas*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
                            px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150">
-                            Daftar Kelas
+                            Kelas
                         </a>
                         <a href="{{ route('siswa.index') }}" 
                            class="{{ request()->is('siswa*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
                            px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150">
-                            Daftar Siswa
+                            Siswa
                         </a>
                         <a href="{{ route('guru.index') }}" 
                            class="{{ request()->is('guru*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
                            px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150">
-                            Daftar Guru
+                            Guru
                         </a>
-                        <a href="#" 
+                        <a href="{{ route('mata-pelajaran.index') }}" 
                            class="{{ request()->is('mata-pelajaran*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
                            px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150">
                             Mata Pelajaran
                         </a>
-                        <a href="#" 
+                        <a href="{{ route('jadwal.index') }}" 
+                           class="{{ request()->is('jadwal*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
+                           px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150">
+                            Jadwal
+                        </a>
+                        <a href="{{ route('absensi.index') }}" 
                            class="{{ request()->is('absensi*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
                            px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150">
                             Absensi
                         </a>
-                        <a href="#" 
+                        <a href="{{ route('nilai.index') }}" 
                            class="{{ request()->is('nilai*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
                            px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150">
                             Nilai
+                        </a>
+                        <a href="{{ route('user.index') }}" 
+                           class="{{ request()->is('user*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
+                           px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150">
+                            User
                         </a>
                     </nav>
                 </div>
@@ -86,32 +96,42 @@
                 <a href="{{ route('kelas.index') }}" 
                    class="{{ request()->is('kelas*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
                    block px-3 py-2 rounded-md text-base font-medium" x-on:click="open = false">
-                    Daftar Kelas
+                    Kelas
                 </a>
                 <a href="{{ route('siswa.index') }}" 
                    class="{{ request()->is('siswa*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
                    block px-3 py-2 rounded-md text-base font-medium" x-on:click="open = false">
-                    Daftar Siswa
+                    Siswa
                 </a>
                 <a href="{{ route('guru.index') }}" 
                    class="{{ request()->is('guru*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
                    block px-3 py-2 rounded-md text-base font-medium" x-on:click="open = false">
-                    Daftar Guru
+                    Guru
                 </a>
-                <a href="#" 
+                <a href="{{ route('mata-pelajaran.index') }}" 
                    class="{{ request()->is('mata-pelajaran*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
                    block px-3 py-2 rounded-md text-base font-medium" x-on:click="open = false">
                     Mata Pelajaran
                 </a>
-                <a href="#" 
+                <a href="{{ route('jadwal.index') }}" 
+                   class="{{ request()->is('jadwal*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
+                   block px-3 py-2 rounded-md text-base font-medium" x-on:click="open = false">
+                    Jadwal
+                </a>
+                <a href="{{ route('absensi.index') }}" 
                    class="{{ request()->is('absensi*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
                    block px-3 py-2 rounded-md text-base font-medium" x-on:click="open = false">
                     Absensi
                 </a>
-                <a href="#" 
+                <a href="{{ route('nilai.index') }}" 
                    class="{{ request()->is('nilai*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
                    block px-3 py-2 rounded-md text-base font-medium" x-on:click="open = false">
                     Nilai
+                </a>
+                <a href="{{ route('user.index') }}" 
+                   class="{{ request()->is('user*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
+                   block px-3 py-2 rounded-md text-base font-medium" x-on:click="open = false">
+                    User
                 </a>
             </div>
         </div>

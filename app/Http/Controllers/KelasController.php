@@ -13,7 +13,7 @@ class KelasController extends Controller
     {
         $waliKelasQuery = Guru::where(function ($query) use ($currentWaliKelasId) {
             $query->whereNotIn('id', function ($subQuery) {
-                $subQuery->select('wali_kelas_id')->from('kelas');
+                $subQuery->select('id_wali_kelas')->from('kelas');
             });
 
             if ($currentWaliKelasId) {
@@ -56,7 +56,7 @@ class KelasController extends Controller
 
         Kelas::create([
             'nama_kelas' => $validated['nama_kelas'],
-            'wali_kelas_id' => $validated['wali_kelas'],
+            'id_wali_kelas' => $validated['wali_kelas'],
         ]);
 
         return redirect()->route('kelas.index')->with('success', 'Kelas berhasil ditambahkan');
@@ -96,7 +96,7 @@ class KelasController extends Controller
 
         $kelas->update([
             'nama_kelas' => $validated['nama_kelas'],
-            'wali_kelas_id' => $validated['wali_kelas'],
+            'id_wali_kelas' => $validated['wali_kelas'],
         ]);
 
         return redirect()->route('kelas.index')->with('success', 'Data kelas berhasil diubah.');

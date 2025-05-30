@@ -10,12 +10,14 @@ class CreateSiswasTable extends Migration
     {
         Schema::create('siswa', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_user')->constrained('users', 'id')
+            ->onUpdate('cascade')->onDelete('restrict');
             $table->string('nama');
             $table->string('nis')->unique();
             $table->text('alamat');
             $table->enum('jk', ['Laki-laki', 'Perempuan']);
-            $table->foreignId('kelas_id')->constrained('kelas', 'id', 'kelas_id'
-            )->onUpdate('cascade')->onDelete('restrict');
+            $table->foreignId('id_kelas')->constrained('kelas', 'id')
+            ->onUpdate('cascade')->onDelete('restrict');
             $table->timestamps();
         });
     }

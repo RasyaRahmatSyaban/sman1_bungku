@@ -12,11 +12,8 @@ class CreateMataPelajaransTable extends Migration
         Schema::create('mata_pelajaran', function (Blueprint $table) {
             $table->id();
             $table->string('nama_mapel');
-            $table->enum('hari', ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu']);
-            $table->foreignId('guru_id')->constrained('guru', 'id', 'guru_id'
-            )->onUpdate('cascade')->onDelete('restrict');
-            $table->foreignId('id_kelas')->constrained('kelas', 'id', 'id_kelas'
-            )->onUpdate('cascade')->onDelete('restrict');
+            $table->foreignId('id_guru')->constrained('guru', 'id')
+            ->onUpdate('cascade')->onDelete('restrict');
             $table->timestamps();
         });
     }

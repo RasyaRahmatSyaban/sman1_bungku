@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Absensi;
+use App\Models\MataPelajaran;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 
 class AbsensiController extends Controller
@@ -12,7 +14,23 @@ class AbsensiController extends Controller
      */
     public function index()
     {
-        return Absensi::with('siswa')->get();
+        // $dosenId = auth()->user()->dosen->id_dosen;
+
+        // $krs = KRS::with('jadwal.kelas.mata_kuliah')
+        //     ->whereHas('jadwal.kelas.mata_kuliah', function ($query) use ($dosenId) {
+        //         $query->where('dosen_pengampu_1_id', $dosenId)
+        //             ->orWhere('dosen_pengampu_2_id', $dosenId)
+        //             ->orWhere('dosen_pengampu_3_id', $dosenId);
+        //     })
+        //     ->get()
+        //     ->unique(function ($item) {
+        //         return $item->jadwal->kelas->id_kelas . '-' . $item->jadwal->kelas->mata_kuliah->id_mata_kuliah;
+        //     });
+
+        // return view('dosen.absensi.index', compact('krs'));
+
+        $absensi = Absensi::all();
+        return view('absensi.index', compact('absensi'));
     }
 
     /**
@@ -20,7 +38,10 @@ class AbsensiController extends Controller
      */
     public function create()
     {
-        //
+        $siswa = Siswa::all();
+        $mapel = MataPelajaran::with('kelas')->get();
+
+        return view('absensi.create', compact('siswa', 'mapel'));
     }
 
     /**
@@ -29,12 +50,23 @@ class AbsensiController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'siswa_id' => 'required|exists:siswa,id',
-            'tanggal' => 'required|date',
-            'status' => 'required|in:Hadir,Alpa,Izin,Sakit',
-        ]);
+        'id_mapel' => 'required|exists:mata_pelajaran,id',
+        'tanggal' => 'required|date',
+        'absensi' => 'required|array',
+        'absensi.*.id_siswa' => 'required|exists:siswa,id',
+        'absensi.*.status' => 'required|in:Hadir,Alpa,Izin,Sakit',
+    ]);
 
-        return Absensi::create($validated);
+        foreach ($validated['absensi'] as $data) {
+            Absensi::create([
+                'id_mapel' => $validated['id_mapel'],
+                'tanggal' => $validated['tanggal'],
+                'id_siswa' => $data['id_siswa'],
+                'status' => $data['status'],
+            ]);
+        }
+
+        return redirect()->route('absensi.index')->with('success', 'Absensi berhasil disimpan.');
     }
 
     /**

@@ -10,20 +10,20 @@ class Siswa extends Model
     use HasFactory;
 
     protected $table = 'siswa';
-    protected $fillable = ['nama', 'nis', 'alamat', 'jk', 'kelas_id'];
+    protected $fillable = ['id_user', 'nama', 'nis', 'alamat', 'jk', 'id_kelas'];
 
     public function kelas()
     {
-        return $this->belongsTo(Kelas::class, 'kelas_id');
+        return $this->belongsTo(Kelas::class, 'id_kelas');
     }
 
     public function nilai()
     {
-        return $this->hasMany(Nilai::class, 'siswa_id');
+        return $this->hasMany(Nilai::class, 'id_siswa');
     }
 
     public function absensi()
     {
-        return $this->hasMany(Absensi::class, 'siswa_id');
+        return $this->hasMany(Absensi::class, 'id_siswa');
     }
 }

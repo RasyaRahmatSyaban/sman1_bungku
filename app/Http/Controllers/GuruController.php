@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guru;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Str;
 
 class GuruController extends Controller
 {
@@ -31,14 +34,29 @@ class GuruController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'username' => 'required|unique:users,username',
             'nama' => 'required',
-            'nip' => 'required|unique:guru|max:9',
-            'alamat' => 'required|',
+            'alamat' => 'required',
+        ]);
+
+        $nip = Str::upper($validated['username']);
+
+        if (Guru::where('nip', $nip)->exists()) {
+            throw ValidationException::withMessages([
+                'username' => ['Username tidak valid karena NIP sudah digunakan.'],
+            ]);
+        }
+
+        $user = User::create([
+            'username' => $validated['username'],
+            'password' => $validated['username'],
+            'role' => 'guru',
         ]);
 
         Guru::create([
+            'id_user' => $user->id,
             'nama' => $validated['nama'],
-            'nip' => $validated['nip'],
+            'nip' => $nip,
             'alamat' => $validated['alamat'],
         ]);
 
@@ -69,13 +87,18 @@ class GuruController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $guru = Guru::with('user')->findOrFail($id);
         $validated = $request->validate([
+            'username' => 'required|unique:users,username,'. $guru->user->id. ',id',
             'nama' => 'required',
             'nip' => 'required|unique:guru,nip|max:9',
             'alamat' => 'required',
         ]);
 
-        $guru = Guru:: find($id);
+        $guru->user->update([
+            'username' => $request->username,
+        ]);
+
         $guru->update([
             'nama' => $validated['nama'],
             'nip' => $validated['nip'],

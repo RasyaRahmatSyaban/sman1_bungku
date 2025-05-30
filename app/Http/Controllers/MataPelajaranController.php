@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guru;
 use App\Models\MataPelajaran;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,8 @@ class MataPelajaranController extends Controller
      */
     public function index()
     {
-        return MataPelajaran::with('kelas')->get();
+        $mapel = MataPelajaran::with('guru')->get();
+        return view('mata-pelajaran.index', compact('mapel'));
     }
 
     /**
@@ -20,7 +22,8 @@ class MataPelajaranController extends Controller
      */
     public function create()
     {
-        //
+        $gurus = Guru::all();
+        return view('mata-pelajaran.create', compact('gurus'));
     }
 
     /**
@@ -29,12 +32,16 @@ class MataPelajaranController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama' => 'required|string|max:255',
-            'hari' => 'required|string|max:50',
-            'kelas_id' => 'required|exists:kelas,id',
+            'nama_mapel' => 'required|string|max:255',
+            'id_guru' => 'required|exists:guru,id',
         ]);
-
-        return MataPelajaran::create($validated);
+        
+        MataPelajaran::create([
+            'nama_mapel' => $validated['nama_mapel'],
+            'id_guru' => $validated['id_guru'],
+        ]);
+        
+        return redirect()->route('mata-pelajaran.index')->with('success', 'Mata Pelajaran berhasil ditambahkan');
     }
 
     /**
@@ -42,15 +49,18 @@ class MataPelajaranController extends Controller
      */
     public function show($id)
     {
-        return MataPelajaran::with('kelas')->findOrFail($id);
+        $mapel = MataPelajaran::findOrFail($id);
+        return view('mata-pelajaran.show', compact('mapel'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(MataPelajaran $mataPelajaran)
+    public function edit($id)
     {
-        //
+        $gurus = Guru::all();
+        $mapel = MataPelajaran::with('guru')->findOrFail($id);
+        return view('mata-pelajaran.edit', compact('mapel', 'gurus'));
     }
 
     /**
@@ -61,13 +71,12 @@ class MataPelajaranController extends Controller
         $mapel = MataPelajaran::findOrFail($id);
 
         $validated = $request->validate([
-            'nama' => 'required|string|max:255',
-            'hari' => 'required|string|max:50',
-            'kelas_id' => 'required|exists:kelas,id',
+            'nama_mapel' => 'required|string|max:255',
+            'id_guru' => 'required|exists:guru,id',
         ]);
 
         $mapel->update($validated);
-        return $mapel;
+        return redirect()->route('mata-pelajaran.index')->with('success', 'Mata Pelajaran berhasil diperbarui');
     }
 
     /**
