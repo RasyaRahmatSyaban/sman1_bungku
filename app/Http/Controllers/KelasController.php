@@ -32,7 +32,7 @@ class KelasController extends Controller
         $kelas = Kelas::with('walikelas')
                 ->withCount('siswa')
                 ->get();
-        return view('kelas.index', compact('kelas'));;
+        return view('admin.kelas.index', compact('kelas'));;
     }
 
     /**
@@ -41,7 +41,7 @@ class KelasController extends Controller
     public function create()
     {
         $wali_kelas = $this->getAvailableWaliKelas();
-        return view('kelas.create', compact('wali_kelas'));
+        return view('admin.kelas.create', compact('wali_kelas'));
     }
 
     /**
@@ -59,7 +59,7 @@ class KelasController extends Controller
             'id_wali_kelas' => $validated['wali_kelas'],
         ]);
 
-        return redirect()->route('kelas.index')->with('success', 'Kelas berhasil ditambahkan');
+        return redirect()->route('admin.kelas.index')->with('success', 'Kelas berhasil ditambahkan');
     }
 
     /**
@@ -68,8 +68,8 @@ class KelasController extends Controller
     public function show($id)
     {
         $kelas = Kelas::findOrFail($id);
-        $jumlah_siswa = Siswa::where('kelas_id', $id)->count();
-        return view('kelas.show', compact('kelas', 'jumlah_siswa'));
+        $jumlah_siswa = Siswa::where('id_kelas', $id)->count();
+        return view('admin.kelas.show', compact('kelas', 'jumlah_siswa'));
     }
 
     /**
@@ -78,8 +78,8 @@ class KelasController extends Controller
     public function edit($id)
     {
         $kelas = Kelas::find($id);
-        $wali_kelas = $this->getAvailableWaliKelas($kelas->wali_kelas_id);
-        return view('kelas.edit', compact('kelas', 'wali_kelas'));
+        $wali_kelas = $this->getAvailableWaliKelas($kelas->id_wali_kelas);
+        return view('admin.kelas.edit', compact('kelas', 'wali_kelas'));
     }
 
     /**
@@ -99,7 +99,7 @@ class KelasController extends Controller
             'id_wali_kelas' => $validated['wali_kelas'],
         ]);
 
-        return redirect()->route('kelas.index')->with('success', 'Data kelas berhasil diubah.');
+        return redirect()->route('admin.kelas.index')->with('success', 'Data kelas berhasil diubah.');
     }
 
     /**
@@ -109,6 +109,6 @@ class KelasController extends Controller
     {
         $kelas = Kelas::findOrFail($id);
         $kelas->delete();
-        return redirect()->route('kelas.index')->with('success', 'Kelas berhasil dihapus.');
+        return redirect()->route('admin.kelas.index')->with('success', 'Kelas berhasil dihapus.');
     }
 }

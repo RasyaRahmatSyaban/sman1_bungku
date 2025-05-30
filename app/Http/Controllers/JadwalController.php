@@ -15,7 +15,7 @@ class JadwalController extends Controller
     public function index()
     {
         $jadwal = Jadwal::with('kelas', 'mata_pelajaran')->get();
-        return view('jadwal.index', compact('jadwal'));
+        return view('admin.jadwal.index', compact('jadwal'));
     }
     
     /**
@@ -26,7 +26,7 @@ class JadwalController extends Controller
         $jadwal = Jadwal::with('kelas', 'mata_pelajaran')->get();
         $kelas = Kelas::all();
         $mapel = MataPelajaran::all();
-        return view('jadwal.create', compact('jadwal', 'kelas', 'mapel'));
+        return view('admin.jadwal.create', compact('jadwal', 'kelas', 'mapel'));
     }
 
     /**
@@ -52,7 +52,7 @@ class JadwalController extends Controller
             'ruangan' => $validated['ruangan'],
         ]);
         
-        return redirect()->route('jadwal.index')->with('success', 'Mata Pelajaran berhasil ditambahkan');
+        return redirect()->route('admin.jadwal.index')->with('success', 'Mata Pelajaran berhasil ditambahkan');
     }
 
     /**
@@ -61,7 +61,7 @@ class JadwalController extends Controller
     public function show($id)
     {
         $jadwal = Jadwal::findOrFail($id);
-        return view('jadwal.show', compact('jadwal'));
+        return view('admin.jadwal.show', compact('jadwal'));
     }
 
     /**
@@ -72,7 +72,7 @@ class JadwalController extends Controller
         $jadwal = Jadwal::with('kelas', 'mata_pelajaran')->findOrFail($id);
         $kelas = Kelas::all();
         $mapel = MataPelajaran::all();
-        return view('jadwal.edit', compact('jadwal', 'kelas', 'mapel'));
+        return view('admin.jadwal.edit', compact('jadwal', 'kelas', 'mapel'));
     }
 
     /**
@@ -100,7 +100,7 @@ class JadwalController extends Controller
             'ruangan' => $validated['ruangan'],
         ]);
 
-        return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil diperbarui');
+        return redirect()->route('admin.jadwal.index')->with('success', 'Jadwal berhasil diperbarui');
     }
 
     /**
@@ -110,6 +110,6 @@ class JadwalController extends Controller
     {
         $jadwal = Jadwal::findOrFail($id);
         $jadwal->delete();
-        return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil dihapus.');
+        return redirect()->route('admin.jadwal.index')->with('success', 'Jadwal berhasil dihapus.');
     }
 }

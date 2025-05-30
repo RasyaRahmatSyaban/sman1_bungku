@@ -22,4 +22,7 @@ class Guru extends Model
     {
         return $this->hasOne(Kelas::class, 'id_wali_kelas');
     }
+    public function user() {
+        return $this->belongsTo(User::class, 'id_user');
+    }
 }

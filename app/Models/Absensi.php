@@ -10,14 +10,14 @@ class Absensi extends Model
     use HasFactory;
 
     protected $table = 'absensi';
-    protected $fillable = ['id_siswa', 'id_mapel', 'tanggal', 'status'];
+    protected $fillable = ['id_siswa', 'id_jadwal', 'tanggal', 'status'];
 
     public function siswa()
     {
         return $this->belongsTo(Siswa::class, 'id_siswa');
     }
-    public function mata_pelajaran()
+    public function jadwal()
     {
-        return $this->belongsTo(MataPelajaran::class, 'id_mapel');
+        return $this->belongsTo(Jadwal::class, 'id_jadwal');
     }
 }

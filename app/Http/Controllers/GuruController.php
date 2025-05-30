@@ -16,7 +16,7 @@ class GuruController extends Controller
     public function index()
     {
         $guru = Guru::all();
-        return view('guru.index', compact('guru'));
+        return view('admin.guru.index', compact('guru'));
     }
 
     /**
@@ -25,7 +25,7 @@ class GuruController extends Controller
     public function create()
     {
         $guru = Guru::all();
-        return view('guru.create', compact('guru'));
+        return view('admin.guru.create', compact('guru'));
     }
 
     /**
@@ -60,7 +60,7 @@ class GuruController extends Controller
             'alamat' => $validated['alamat'],
         ]);
 
-        return redirect()->route('guru.index')->with('success', 'Guru berhasil ditambahkan');
+        return redirect()->route('admin.guru.index')->with('success', 'Guru berhasil ditambahkan');
     }
 
 
@@ -70,7 +70,7 @@ class GuruController extends Controller
     public function show($id)
     {
         $guru = Guru::findOrFail($id);
-        return view('guru.show', compact('guru'));
+        return view('admin.guru.show', compact('guru'));
     }
 
     /**
@@ -79,7 +79,7 @@ class GuruController extends Controller
     public function edit($id)
     {
         $guru = Guru::findOrFail($id);
-        return view('guru.edit', compact('guru'));
+        return view('admin.guru.edit', compact('guru'));
     }
 
     /**
@@ -91,7 +91,7 @@ class GuruController extends Controller
         $validated = $request->validate([
             'username' => 'required|unique:users,username,'. $guru->user->id. ',id',
             'nama' => 'required',
-            'nip' => 'required|unique:guru,nip|max:9',
+            'nip' => 'required|max:9|unique:guru,nip,' . $id,
             'alamat' => 'required',
         ]);
 
@@ -105,7 +105,7 @@ class GuruController extends Controller
             'alamat' => $validated['alamat'],
         ]);
 
-        return redirect()->route('guru.index')->with('success', 'Data guru berhasil diubah');
+        return redirect()->route('admin.guru.index')->with('success', 'Data guru berhasil diubah');
     }
 
     /**
@@ -114,7 +114,9 @@ class GuruController extends Controller
     public function destroy($id)
     {
         $guru = Guru::findOrFail($id);
+        $user = User::findOrFail($guru->id_user);
         $guru->delete();
-        return redirect()->route('guru.index')->with('success', 'Guru berhasil dihapus');
+        $user->delete();
+        return redirect()->route('admin.guru.index')->with('success', 'Guru berhasil dihapus');
     }
 }

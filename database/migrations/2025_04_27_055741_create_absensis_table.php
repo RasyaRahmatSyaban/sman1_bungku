@@ -12,7 +12,7 @@ class CreateAbsensisTable extends Migration
             $table->id();
             $table->foreignId('id_siswa')->constrained('siswa', 'id')
             ->onUpdate('cascade')->onDelete('restrict');
-            $table->foreignId('id_mapel')->constrained('mata_pelajaran', 'id')
+            $table->foreignId('id_jadwal')->constrained('jadwal', 'id')
             ->onUpdate('cascade')->onDelete('restrict');
             $table->date('tanggal');
             $table->enum('status', ['Hadir', 'Izin', 'Sakit', 'Alpa']);

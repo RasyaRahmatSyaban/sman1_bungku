@@ -14,7 +14,7 @@ class MataPelajaranController extends Controller
     public function index()
     {
         $mapel = MataPelajaran::with('guru')->get();
-        return view('mata-pelajaran.index', compact('mapel'));
+        return view('admin.mata-pelajaran.index', compact('mapel'));
     }
 
     /**
@@ -23,7 +23,7 @@ class MataPelajaranController extends Controller
     public function create()
     {
         $gurus = Guru::all();
-        return view('mata-pelajaran.create', compact('gurus'));
+        return view('admin.mata-pelajaran.create', compact('gurus'));
     }
 
     /**
@@ -41,7 +41,7 @@ class MataPelajaranController extends Controller
             'id_guru' => $validated['id_guru'],
         ]);
         
-        return redirect()->route('mata-pelajaran.index')->with('success', 'Mata Pelajaran berhasil ditambahkan');
+        return redirect()->route('admin.mata-pelajaran.index')->with('success', 'Mata Pelajaran berhasil ditambahkan');
     }
 
     /**
@@ -50,7 +50,7 @@ class MataPelajaranController extends Controller
     public function show($id)
     {
         $mapel = MataPelajaran::findOrFail($id);
-        return view('mata-pelajaran.show', compact('mapel'));
+        return view('admin.mata-pelajaran.show', compact('mapel'));
     }
 
     /**
@@ -60,7 +60,7 @@ class MataPelajaranController extends Controller
     {
         $gurus = Guru::all();
         $mapel = MataPelajaran::with('guru')->findOrFail($id);
-        return view('mata-pelajaran.edit', compact('mapel', 'gurus'));
+        return view('admin.mata-pelajaran.edit', compact('mapel', 'gurus'));
     }
 
     /**
@@ -76,7 +76,7 @@ class MataPelajaranController extends Controller
         ]);
 
         $mapel->update($validated);
-        return redirect()->route('mata-pelajaran.index')->with('success', 'Mata Pelajaran berhasil diperbarui');
+        return redirect()->route('admin.mata-pelajaran.index')->with('success', 'Mata Pelajaran berhasil diperbarui');
     }
 
     /**
@@ -86,6 +86,6 @@ class MataPelajaranController extends Controller
     {
         $mapel = MataPelajaran::findOrFail($id);
         $mapel->delete();
-        return response()->json(['message' => 'Mata pelajaran berhasil dihapus']);
+        return redirect()->route('admin.mata-pelajaran.index')->with('success', 'Mata Pelajaran berhasil dihapus');
     }
 }

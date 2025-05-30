@@ -17,7 +17,7 @@ class SiswaController extends Controller
     public function index()
     {
         $siswa = Siswa::with('kelas')->get();
-        return view('siswa.index', compact('siswa'));
+        return view('admin.siswa.index', compact('siswa'));
     }
 
     /**
@@ -27,7 +27,7 @@ class SiswaController extends Controller
     {
         $siswa = Siswa::all();
         $kelas = Kelas::all();
-        return view('siswa.create', compact('siswa', 'kelas'));
+        return view('admin.siswa.create', compact('siswa', 'kelas'));
     }
 
     /**
@@ -65,7 +65,7 @@ class SiswaController extends Controller
             'id_kelas' => $validated['id_kelas'],
         ]);
 
-        return redirect()->route('siswa.index')->with('success', 'Siswa berhasil ditambahkan');
+        return redirect()->route('admin.siswa.index')->with('success', 'Siswa berhasil ditambahkan');
     }
 
     /**
@@ -75,7 +75,7 @@ class SiswaController extends Controller
     {
         $siswa = Siswa::with('kelas')->find($id);
 
-        return view('siswa.show', compact('siswa'));
+        return view('admin.siswa.show', compact('siswa'));
     }
 
     /**
@@ -85,7 +85,7 @@ class SiswaController extends Controller
     {
         $siswa = Siswa::with('kelas')->find($id);
         $kelas = Kelas::all();
-        return view('siswa.edit', compact('siswa', 'kelas'));
+        return view('admin.siswa.edit', compact('siswa', 'kelas'));
     }
 
     /**
@@ -101,7 +101,7 @@ class SiswaController extends Controller
             'nis' => 'required|string|max:20|unique:siswa,nis,' . $id,
             'alamat' => 'required|string|max:255|',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'kelas' => 'required',
+            'id_kelas' => 'required',
         ]);
 
         $siswa->user->update([
@@ -113,10 +113,10 @@ class SiswaController extends Controller
             'nis' => $validated['nis'],
             'alamat' => $validated['alamat'],
             'jk' => $validated['jenis_kelamin'],
-            'kelas' => $validated['kelas'],
+            'id_kelas' => $validated['id_kelas'],
         ]);
 
-        return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil diubah');
+        return redirect()->route('admin.siswa.index')->with('success', 'Data siswa berhasil diubah');
     }
 
     /**
@@ -125,7 +125,9 @@ class SiswaController extends Controller
     public function destroy($id)
     {
         $siswa = Siswa::findOrFail($id);
+        $user = User::findOrFail($siswa->id_user);
         $siswa->delete();
-        return redirect()->route('siswa.index')->with('success', 'Siswa berhasil dihapus.');
+        $user->delete();
+        return redirect()->route('admin.siswa.index')->with('success', 'Siswa berhasil dihapus.');
     }
 }
