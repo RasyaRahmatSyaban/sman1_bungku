@@ -34,7 +34,6 @@
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mata Pelajaran</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Guru</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jam Mulai - Jam Selesai</th>
-                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -47,23 +46,6 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $j->mata_pelajaran->nama_mapel }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $j->mata_pelajaran->guru->nama }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $j->jam_mulai . " - " . $j->jam_selesai }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <div class="flex justify-end space-x-2">
-                                <a href="{{ route('admin.jadwal.show', $j->id) }}" class="text-sky-600 hover:text-sky-900 bg-sky-50 hover:bg-sky-100 p-2 rounded-md transition-colors">
-                                    <i class="ph ph-eye"></i>
-                                </a>
-                                <a href="{{ route('admin.jadwal.edit', $j->id) }}" class="text-yellow-600 hover:text-yellow-900 bg-yellow-50 hover:bg-yellow-100 p-2 rounded-md transition-colors">
-                                    <i class="ph ph-note-pencil"></i>
-                                </a>
-                                <form onsubmit="return confirm('Apakah Anda yakin ingin menghapus mapel ini?')" method="POST" action="{{ route('admin.jadwal.destroy', $j->id) }}" class="inline">
-                                    @method("DELETE")
-                                    @csrf
-                                    <button type="submit" class="text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100 p-2 rounded-md transition-colors">
-                                        <i class="ph ph-trash-simple"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
                     </tr>
                     @empty
                     <tr>
