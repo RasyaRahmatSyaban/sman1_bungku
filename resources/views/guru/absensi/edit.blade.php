@@ -2,8 +2,9 @@
     <div class="max-w-full mx-auto">
         <div class="bg-white shadow overflow-hidden sm:rounded-lg">
             <div class="px-4 py-5 sm:p-6">
-                <form action="{{ route('absensi.update') }}" method="POST">
+                <form action="{{ route('guru.absensi.update') }}" method="POST">
                     @csrf
+                    @METHOD('PUT')
 
                     <input type="hidden" name="id_mapel" value="{{ $jadwalId }}">
                     <input type="hidden" name="tanggal" value="{{ $tanggal }}">
@@ -50,7 +51,7 @@
 
                     <!-- Tombol -->
                     <div class="mt-6 flex justify-end space-x-3">
-                        <a href="{{ route('absensi.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                        <a href="{{ route('guru.absensi.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
                             Batal
                         </a>
                         <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">

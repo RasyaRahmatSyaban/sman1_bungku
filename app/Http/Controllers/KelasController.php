@@ -29,10 +29,25 @@ class KelasController extends Controller
      */
     public function index()
     {
-        $kelas = Kelas::with('walikelas')
-                ->withCount('siswa')
-                ->get();
-        return view('admin.kelas.index', compact('kelas'));;
+        $user = auth()->user();
+        if($user->role === 'admin'){
+            $kelas = Kelas::with('walikelas')
+                    ->withCount('siswa')
+                    ->get();
+            return view('admin.kelas.index', compact('kelas'));;
+        }elseif($user->role === 'guru'){
+            $guruId = $user->guru->id;
+            $kelas = Kelas::with('waliKelas', 'siswa')->where('id_wali_kelas', $guruId)->first();
+
+            return view('guru.kelas.index', compact('kelas'));
+        }elseif($user->role === 'siswa'){
+            $siswaId = $user->siswa->id;
+            $kelas = Kelas::with( 'siswa')->where('id', $siswaId)->first();
+
+            return view('siswa.kelas.index', compact('kelas'));
+        }else{
+            abort(403, "Anda tidak memiliki akses");
+        }
     }
 
     /**

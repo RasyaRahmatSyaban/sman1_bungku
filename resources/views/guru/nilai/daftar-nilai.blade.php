@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <a href="{{ route('nilai.create', $jadwal->id) }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 w-full justify-center">
+                        <a href="{{ route('guru.nilai.create', $jadwal->id) }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 w-full justify-center">
                             <i class="ph ph-plus mr-2"></i>
                             Input Nilai
                         </a>

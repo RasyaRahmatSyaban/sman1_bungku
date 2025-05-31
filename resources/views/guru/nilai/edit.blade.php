@@ -2,7 +2,7 @@
     <div class="max-w-full mx-auto">
         <div class="bg-white shadow overflow-hidden sm:rounded-lg">
             <div class="px-4 py-5 sm:p-6">
-                <form action="{{ route('nilai.update') }}" method="POST">
+                <form action="{{ route('guru.nilai.update') }}" method="POST">
                     @csrf
 
                     <input type="hidden" name="id_jadwal" value="{{ $jadwalId }}">
@@ -10,17 +10,10 @@
                     <!-- Info Jadwal -->
                     <div class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
                         <h3 class="text-sm font-semibold text-gray-700 mb-2">Informasi Jadwal</h3>
-                        <div class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-4">
-                            <div>
                                 <label class="block text-sm font-medium text-gray-700">Mata Pelajaran</label>
                                 <input type="text" readonly class="mt-1 shadow-sm p-2 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100"
                                     value="{{ $jadwal->firstWhere('id', $jadwalId)?->mata_pelajaran->nama_mapel }} - {{ $jadwal->firstWhere('id', $jadwalId)?->kelas->nama_kelas }}">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Tanggal Penilaian</label>
-                            </div>
                         </div>
-                    </div>
 
                     <!-- Daftar Siswa dan Nilai -->
                     <div class="border border-gray-200 p-4 rounded-lg">
@@ -54,7 +47,7 @@
 
                     <!-- Tombol -->
                     <div class="mt-6 flex justify-end space-x-3">
-                        <a href="{{ route('nilai.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                        <a href="{{ route('guru.nilai.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
                             Batal
                         </a>
                         <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">

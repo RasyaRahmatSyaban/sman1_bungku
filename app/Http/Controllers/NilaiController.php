@@ -15,12 +15,41 @@ class NilaiController extends Controller
      */
     public function index()
     {
-        $nilaiGroups = Nilai::with(['jadwal.mata_pelajaran', 'jadwal.kelas'])
+        $user = auth()->user();
+        if($user->role === 'admin'){
+            $nilaiGroups = Nilai::with(['jadwal.mata_pelajaran', 'jadwal.kelas'])
             ->selectRaw('MIN(id) as id, id_jadwal')
             ->groupBy('id_jadwal')
             ->get();
 
-        return view('admin.nilai.index', compact('nilaiGroups'));
+            return view('admin.nilai.index', compact('nilaiGroups'));
+        }elseif($user->role === 'guru'){
+            $guruId = $user->guru->id;
+
+            // Ambil semua jadwal yang dimiliki guru ini
+            $jadwalIds = Jadwal::whereHas('mata_pelajaran', function ($query) use ($guruId) {
+                $query->where('id_guru', $guruId);
+            })->pluck('id');
+
+            // Ambil absensi yang hanya berkaitan dengan jadwal milik guru ini
+            $nilaiGroups = Nilai::with(['jadwal'])
+                ->whereIn('id_jadwal', $jadwalIds)
+                ->selectRaw('MIN(id) as id, id_jadwal')
+                ->groupBy('id_jadwal')
+                ->get();
+            return view('guru.nilai.index', compact('nilaiGroups'));
+        }elseif($user->role === 'siswa'){
+            $siswaId = $user->siswa->id;
+
+            $nilaiList = Nilai::with(['jadwal.kelas', 'jadwal.mata_pelajaran'])
+                ->where('id_siswa', $siswaId)
+                ->orderBy('id_jadwal') // Urutkan berdasarkan mata pelajaran
+                ->get();
+
+            return view('siswa.nilai.index', compact('nilaiList'));
+        }else{
+            abort(403, "Anda tidak memiliki akses");
+        }
     }
 
     /**
@@ -58,7 +87,7 @@ class NilaiController extends Controller
             );
         }
 
-        return redirect()->route('guru.nilai.daftar-nilai')->with('success', 'Nilai berhasil disimpan.');
+        return redirect()->route('guru.nilai.index')->with('success', 'Nilai berhasil disimpan.');
     }
 
     /**
@@ -66,7 +95,11 @@ class NilaiController extends Controller
      */
     public function daftarNilai()
     {
-        $jadwals = Jadwal::with(['mata_pelajaran', 'kelas'])->get();
+        $user = auth()->user();
+        $guruId = $user->guru->id;
+        $jadwals = Jadwal::with(['mata_pelajaran', 'kelas'])->whereHas('mata_pelajaran.guru', function ($query) use ($guruId){
+                $query->where('id', $guruId);
+            })->get();
 
         return view('guru.nilai.daftar-nilai', compact('jadwals'));
     }

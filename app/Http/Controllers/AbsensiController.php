@@ -15,14 +15,44 @@ class AbsensiController extends Controller
      */
     public function index()
     {
-        $absensiGroups = Absensi::with(['jadwal'])
-        ->selectRaw('MIN(id) as id, id_jadwal, tanggal') 
-        ->groupBy('id_jadwal', 'tanggal') 
-        ->get();
+        $user = auth()->user();
+        if($user->role === 'admin'){
+            $absensiGroups = Absensi::with(['jadwal'])
+            ->selectRaw('MIN(id) as id, id_jadwal, tanggal') 
+            ->groupBy('id_jadwal', 'tanggal') 
+            ->get();
 
-        $jadwals = Jadwal::with(['kelas', 'mata_pelajaran'])->get();
+            $jadwals = Jadwal::with(['kelas', 'mata_pelajaran'])->get();
 
-        return view('admin.absensi.index', compact('absensiGroups', 'jadwals'));
+            return view('admin.absensi.index', compact('absensiGroups', 'jadwals'));
+        }elseif($user->role === 'guru'){
+            $guruId = $user->guru->id;
+
+            // Ambil semua jadwal yang dimiliki guru ini
+            $jadwalIds = Jadwal::whereHas('mata_pelajaran', function ($query) use ($guruId) {
+                $query->where('id_guru', $guruId);
+            })->pluck('id');
+
+            // Ambil absensi yang hanya berkaitan dengan jadwal milik guru ini
+            $absensiGroups = Absensi::with(['jadwal'])
+                ->whereIn('id_jadwal', $jadwalIds)
+                ->selectRaw('MIN(id) as id, id_jadwal, tanggal')
+                ->groupBy('id_jadwal', 'tanggal')
+                ->get();
+            return view('guru.absensi.index', compact('absensiGroups'));
+        }elseif($user->role === 'siswa'){
+            $siswaId = $user->siswa->id;
+
+            $absensiList = Absensi::with(['jadwal.mata_pelajaran', 'jadwal.kelas'])
+                ->where('id_siswa', $siswaId)
+                ->orderBy('id_jadwal') // Urutkan berdasarkan mata pelajaran
+                ->orderBy('tanggal')   // Lalu urutkan berdasarkan tanggal
+                ->get();
+
+            return view('siswa.absensi.index', compact('absensiList'));
+        }else{
+            abort(403, "Anda tidak memiliki akses");
+        }
     }
 
     /**
@@ -36,7 +66,7 @@ class AbsensiController extends Controller
         // Siswa dari kelas terkait
         $siswa = $jadwal->kelas->siswa;
 
-        return view('admin.absensi.create', compact('jadwal', 'siswa'));
+        return view('guru.absensi.create', compact('jadwal', 'siswa'));
     }
 
     /**
@@ -61,7 +91,7 @@ class AbsensiController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.absensi.index')->with('success', 'Absensi berhasil disimpan.');
+        return redirect()->route('guru.absensi.index')->with('success', 'Absensi berhasil disimpan.');
     }
 
     /**
@@ -69,10 +99,13 @@ class AbsensiController extends Controller
      */
     public function daftarAbsensi()
     {
-        $jadwals = Jadwal::with(['kelas', 'mata_pelajaran'])->get();
-        return view('admin.absensi.daftar-absensi', compact('jadwals'));
+        $user = auth()->user();
+        $guruId = $user->guru->id;
+        $jadwals = Jadwal::with(['kelas', 'mata_pelajaran'])->whereHas('mata_pelajaran.guru', function ($query) use ($guruId){
+                $query->where('id', $guruId);
+            })->get();
+        return view('guru.absensi.daftar-absensi', compact('jadwals', 'user'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -87,8 +120,8 @@ class AbsensiController extends Controller
             ->where('tanggal', $tanggal)
             ->get();
 
-        $jadwal = Jadwal::with('kelas', 'mata_pelajaran')->get();
-        return view('admin.absensi.edit', compact('absensi', 'jadwal', 'jadwalId', 'tanggal'));
+        $jadwal = Jadwal::with('kelas', 'mata_pelajaran')->first();
+        return view('guru.absensi.edit', compact('absensi', 'jadwal', 'jadwalId', 'tanggal'));
     }
 
     /**
@@ -111,7 +144,7 @@ class AbsensiController extends Controller
         ]);
     }
 
-    return redirect()->route('admin.absensi.index')->with('success', 'Absensi berhasil diperbarui.');
+    return redirect()->route('guru.absensi.index')->with('success', 'Absensi berhasil diperbarui.');
     }
 
     /**

@@ -88,6 +88,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
         Route::put('/{id}', [JadwalController::class, 'update'])->name('update');
         Route::delete('/{id}', [JadwalController::class, 'destroy'])->name('destroy');
     });
+
+    // Absensi
+    Route::prefix('absensi')->name('absensi.')->group(function () {
+        Route::get('/', [AbsensiController::class, 'index'])->name('index');
+    });
 });
 
 Route::prefix('guru')->name('guru.')->middleware(['auth', 'role:guru'])->group(function () {

@@ -1,4 +1,4 @@
-<x-guru-layout title="Absensi" section_title="Daftar Absensi - Guru">
+<x-guru-layout title="Daftar Absensi Kelas Anda" section_title="Daftar Absensi Kelas Anda, {{ $user->guru->nama }}">
     <!-- Notification -->
     @if (session('success'))
     <div class="rounded-md bg-green-50 p-4 mb-6 border border-green-200">
@@ -23,8 +23,7 @@
 
     <!-- Header Section -->
     <div class="mb-6">
-        <h2 class="text-lg font-semibold text-gray-900 mb-4">Pilih Kelas untuk Tambah Absensi</h2>
-        <p class="text-sm text-gray-600 mb-6">Pilih jadwal kelas yang ingin Anda buat absensinya.</p>
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">Pilih Mapel Kelas yang ingin Anda buat absensinya</h2>
     </div>
 
     <!-- Jadwal Cards -->
@@ -41,7 +40,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <a href="{{ route('absensi.create', $jadwal->id) }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 w-full justify-center">
+                        <a href="{{ route('guru.absensi.create', $jadwal->id) }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 w-full justify-center">
                             <i class="ph ph-plus mr-2"></i>
                             Tambah Absensi
                         </a>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guru;
 use App\Models\Jadwal;
 use App\Models\Kelas;
 use App\Models\MataPelajaran;
@@ -14,8 +15,25 @@ class JadwalController extends Controller
      */
     public function index()
     {
-        $jadwal = Jadwal::with('kelas', 'mata_pelajaran')->get();
-        return view('admin.jadwal.index', compact('jadwal'));
+        $user = auth()->user();
+        if($user->role === 'admin'){
+            $jadwal = Jadwal::with('kelas', 'mata_pelajaran')->get();
+            return view('admin.jadwal.index', compact('jadwal'));
+        }elseif($user->role === 'guru'){
+            $guruId = $user->guru->id;
+            $jadwal = Jadwal::with('mata_pelajaran.guru')->whereHas('mata_pelajaran.guru', function ($query) use ($guruId){
+                $query->where('id', $guruId);
+            })->get();
+            return view('guru.jadwal.index', compact('jadwal'));
+        }elseif($user->role === 'siswa'){
+            $siswaId = $user->siswa->id;
+            $jadwal = Jadwal::with('kelas.siswa')->whereHas('kelas.siswa', function ($query) use ($siswaId){
+                $query->where('id', $siswaId);
+            })->get();
+            return view('siswa.jadwal.index', compact('jadwal'));
+        }else{
+            abort(403, "Anda tidak memiliki akses");
+        }
     }
     
     /**

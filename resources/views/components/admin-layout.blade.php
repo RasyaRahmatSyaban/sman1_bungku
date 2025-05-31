@@ -51,7 +51,11 @@
                            px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150">
                             Jadwal
                         </a>
-    
+                        <a href="{{ route('admin.absensi.index') }}" 
+                           class="{{ request()->is('absensi*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
+                           px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150">
+                            Absensi
+                        </a>
                         <a href="{{ route('admin.user.index') }}" 
                            class="{{ request()->is('user*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
                            px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150">
@@ -108,6 +112,11 @@
                    class="{{ request()->is('jadwal*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
                    block px-3 py-2 rounded-md text-base font-medium" x-on:click="open = false">
                     Jadwal
+                </a>
+                <a href="{{ route('admin.absensi.index') }}" 
+                   class="{{ request()->is('absensi*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
+                   block px-3 py-2 rounded-md text-base font-medium" x-on:click="open = false">
+                    Absensi
                 </a>
                 <a href="{{ route('admin.user.index') }}" 
                    class="{{ request()->is('user*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 

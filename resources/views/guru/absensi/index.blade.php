@@ -23,7 +23,7 @@
 
     <!-- Action Button -->
     <div class="mb-6">
-        <a href="{{ route('absensi.daftar-absensi') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+        <a href="{{ route('guru.absensi.daftar-absensi') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
             <i class="ph ph-plus mr-2"></i>
             Tambah Absensi
         </a>
@@ -51,13 +51,13 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $a->tanggal }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex justify-end space-x-2">
-                                    <a href="{{ route('absensi.daftar-absensi', $a->id) }}" class="text-sky-600 hover:text-sky-900 bg-sky-50 hover:bg-sky-100 p-2 rounded-md transition-colors">
+                                    <a href="{{ route('guru.absensi.daftar-absensi', $a->id) }}" class="text-sky-600 hover:text-sky-900 bg-sky-50 hover:bg-sky-100 p-2 rounded-md transition-colors">
                                         <i class="ph ph-eye"></i>
                                     </a>
-                                    <a href="{{ route('absensi.edit', ['id_jadwal' => $a->id_jadwal, 'tanggal' => $a->tanggal]) }}" class="text-yellow-600 hover:text-yellow-900 bg-yellow-50 hover:bg-yellow-100 p-2 rounded-md transition-colors">
+                                    <a href="{{ route('guru.absensi.edit', ['id_jadwal' => $a->id_jadwal, 'tanggal' => $a->tanggal]) }}" class="text-yellow-600 hover:text-yellow-900 bg-yellow-50 hover:bg-yellow-100 p-2 rounded-md transition-colors">
                                         <i class="ph ph-note-pencil"></i>
                                     </a>
-                                    <form onsubmit="return confirm('Apakah Anda yakin ingin menghapus semua absensi ini?')" method="POST" action="{{ route('absensi.destroy') }}" class="inline">
+                                    <form onsubmit="return confirm('Apakah Anda yakin ingin menghapus semua absensi ini?')" method="POST" action="{{ route('guru.absensi.destroy') }}" class="inline">
                                         @csrf
                                         @method('DELETE')
                                         <input type="hidden" name="id_jadwal" value="{{ $a->id_jadwal }}">

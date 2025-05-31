@@ -1,4 +1,4 @@
-<x-guru-layout title="Nilai" section_title="Daftar Nilai">
+<x-admin-layout title="Absensi" section_title="Daftar Absensi">
     <!-- Notification -->
     @if (session('success'))
     <div class="rounded-md bg-green-50 p-4 mb-6 border border-green-200">
@@ -23,13 +23,13 @@
 
     <!-- Action Button -->
     <div class="mb-6">
-        <a href="{{ route('guru.nilai.daftar-nilai') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+        <a href="{{ route('guru.absensi.daftar-absensi') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
             <i class="ph ph-plus mr-2"></i>
-            Input Nilai
+            Tambah Absensi
         </a>
     </div>
 
-    <!-- Tabel Nilai -->
+    <!-- Tabel Absensi -->
     <div class="bg-white shadow overflow-hidden sm:rounded-lg">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
@@ -38,27 +38,30 @@
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kelas</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mata Pelajaran</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
                         <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @forelse ($nilaiGroups as $nilai)
+                    @forelse ($absensiGroups as $a)
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $loop->iteration }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $nilai->jadwal->kelas->nama_kelas ?? '-' }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $nilai->jadwal->mata_pelajaran->nama_mapel ?? '-' }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $a->jadwal->kelas->nama_kelas ?? '-' }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $a->jadwal->mata_pelajaran->nama_mapel ?? '-' }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $a->tanggal }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex justify-end space-x-2">
-                                    <a href="{{ route('guru.nilai.daftar-nilai', $nilai->id) }}" class="text-sky-600 hover:text-sky-900 bg-sky-50 hover:bg-sky-100 p-2 rounded-md transition-colors">
+                                    <a href="{{ route('guru.absensi.daftar-absensi', $a->id) }}" class="text-sky-600 hover:text-sky-900 bg-sky-50 hover:bg-sky-100 p-2 rounded-md transition-colors">
                                         <i class="ph ph-eye"></i>
                                     </a>
-                                    <a href="{{ route('guru.nilai.edit', ['id_jadwal' => $nilai->id_jadwal, 'tanggal' => $nilai->tanggal]) }}" class="text-yellow-600 hover:text-yellow-900 bg-yellow-50 hover:bg-yellow-100 p-2 rounded-md transition-colors">
+                                    <a href="{{ route('guru.absensi.edit', ['id_jadwal' => $a->id_jadwal, 'tanggal' => $a->tanggal]) }}" class="text-yellow-600 hover:text-yellow-900 bg-yellow-50 hover:bg-yellow-100 p-2 rounded-md transition-colors">
                                         <i class="ph ph-note-pencil"></i>
                                     </a>
-                                    <form onsubmit="return confirm('Apakah Anda yakin ingin menghapus semua nilai ini?')" method="POST" action="{{ route('guru.nilai.destroy') }}" class="inline">
+                                    <form onsubmit="return confirm('Apakah Anda yakin ingin menghapus semua absensi ini?')" method="POST" action="{{ route('guru.absensi.destroy') }}" class="inline">
                                         @csrf
                                         @method('DELETE')
-                                        <input type="hidden" name="id_jadwal" value="{{ $nilai->id_jadwal }}">
+                                        <input type="hidden" name="id_jadwal" value="{{ $a->id_jadwal }}">
+                                        <input type="hidden" name="tanggal" value="{{ $a->tanggal }}">
                                         <button type="submit" class="text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100 p-2 rounded-md transition-colors">
                                             <i class="ph ph-trash-simple"></i>
                                         </button>
@@ -68,11 +71,11 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">Tidak Ada Nilai.</td>
+                            <td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">Tidak Ada Absensi.</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
     </div>
-</x-guru-layout>
+</x-admin-layout>
