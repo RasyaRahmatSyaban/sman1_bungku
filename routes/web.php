@@ -96,6 +96,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     // Absensi
     Route::prefix('absensi')->name('absensi.')->group(function () {
         Route::get('/', [AbsensiController::class, 'index'])->name('index');
+        Route::delete('/', [AbsensiController::class, 'destroy'])->name('destroy');
+    });
+
+    // Nilai
+    Route::prefix('nilai')->name('nilai.')->group(function () {
+        Route::get('/', [NilaiController::class, 'index'])->name('index');
+        Route::delete('/', [NilaiController::class, 'destroy'])->name('destroy');
     });
 });
 

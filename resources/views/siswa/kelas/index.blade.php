@@ -1,4 +1,4 @@
-<x-siswa-layout title="Kelas" section_title="Daftar Murid di Kelas Anda">
+<x-siswa-layout title="Kelas" section_title="Daftar Teman Kelas Anda">
     <!-- Notifikasi -->
     @if (session('success'))
         <div class="rounded-md bg-green-50 p-4 mb-6 border border-green-200">

@@ -1,4 +1,4 @@
-<x-siswa-layout title="Jadwal" section_title="Jadwal Mengajar Anda">
+<x-siswa-layout title="Jadwal" section_title="Jadwal Anda">
     <!-- Notification -->
     @if (session('success'))
     <div class="rounded-md bg-green-50 p-4 mb-6 border border-green-200">

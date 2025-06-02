@@ -14,7 +14,7 @@
 
 <body class="bg-gray-50 min-h-screen flex flex-col">
     <header x-data="{ open: false, profileOpen: false }" class="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
@@ -65,6 +65,12 @@
                            px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150">
                             <i class="ph ph-clipboard mr-1"></i>
                             Absensi
+                        </a>
+                        <a href="{{ route('admin.nilai.index') }}" 
+                           class="{{ request()->is('nilai*') ? 'bg-blue-50 text-blue-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
+                           px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150">
+                            <i class="ph ph-clipboard mr-1"></i>
+                            Nilai
                         </a>
                         <a href="{{ route('admin.user.index') }}" 
                            class="{{ request()->is('user*') ? 'bg-blue-50 text-blue-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
@@ -168,6 +174,12 @@
                    block px-3 py-2 rounded-md text-base font-medium transition-colors duration-150" @click="open = false">
                     <i class="ph ph-clipboard mr-2"></i>
                     Absensi
+                </a>
+                <a href="{{ route('admin.nilai.index') }}" 
+                   class="{{ request()->is('nilai*') ? 'bg-blue-50 text-blue-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
+                   block px-3 py-2 rounded-md text-base font-medium transition-colors duration-150" @click="open = false">
+                    <i class="ph ph-clipboard mr-2"></i>
+                    Nilai
                 </a>
                 <a href="{{ route('admin.user.index') }}" 
                    class="{{ request()->is('user*') ? 'bg-blue-50 text-blue-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} 
